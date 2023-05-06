@@ -1,25 +1,27 @@
 const lang = require('../../utils/lang.js');
 
 module.exports = {
-	name: 'ping',
-	enabled: true,
-    aliases: [],
-	description: 'Check bot\'s ping.',
-	cooldown: 3000,
-	permissions: {
-        roles_permissions: {
-            user: [],
-            bot: [],
-        },
-        user_permission: {
-            type: null
-        }
+  name: 'ping',
+  enabled: true,
+  aliases: [],
+  description: "Check bot's ping.",
+  cooldown: 3000,
+  permissions: {
+    roles_permissions: {
+      user: [],
+      bot: [],
     },
-	help: {
-        usage: '{prefix}{command}',
+    user_permission: {
+      type: null,
     },
-	run: async (client, message, args) => {
-		const server = await client.get.server(message.guild.id);
-		message.reply(lang('commands:ping', server.language, [Math.round(client.ws.ping)]));
-	}
+  },
+  help: {
+    usage: '{prefix}{command}',
+  },
+  run: async (client, message, args) => {
+    const server = await client.get.server(message.guild.id);
+    message.reply(
+      lang('commands:ping', server.language, [Math.round(client.ws.ping)])
+    );
+  },
 };

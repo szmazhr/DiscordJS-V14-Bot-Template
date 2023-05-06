@@ -1,7 +1,3 @@
-<p align="center">
-    <img src="https://forthebadge.com/images/badges/powered-by-electricity.svg" />
-    <img src="https://forthebadge.com/images/badges/powered-by-black-magic.svg" />
-</p>
 
 <p align="center">
 	<img src="https://cdn.discordapp.com/attachments/781571299385540649/1026575412601565284/0_E7ioyfbvAEI4v8ta.jpeg?width=960&height=540" height="200" style="float: left; margin: 0px 10px 15px 1px;"/> <a style="font-size: 20px"> <a style="font-size: 30px"><br>
@@ -9,29 +5,20 @@
 
 <p align="center">
     <a style="font-size:15px;font-family:verdana"><b>GitHub Repository Statistics/Info:</b></a><br>
-    <img src="https://img.shields.io/github/forks/Da4ndo/Better-DiscordJS-V14-Bot-Template?label=Forks&color=lime&logo=githubactions&logoColor=lime">
-    <img src="https://img.shields.io/github/stars/Da4ndo/Better-DiscordJS-V14-Bot-Template?label=Stars&color=yellow&logo=reverbnation&logoColor=yellow">
-    <img src="https://img.shields.io/github/license/Da4ndo/Better-DiscordJS-V14-Bot-Template?label=License&color=808080&logo=gitbook&logoColor=808080">
-    <img src="https://img.shields.io/github/issues/Da4ndo/Better-DiscordJS-V14-Bot-Template?label=Issues&color=red&logo=ifixit&logoColor=red">
+    <img src="https://img.shields.io/github/forks/szmazhr/DiscordJS-V14-Bot-Template?label=Forks&color=lime&logo=githubactions&logoColor=lime">
+    <img src="https://img.shields.io/github/stars/szmazhr/DiscordJS-V14-Bot-Template?label=Stars&color=yellow&logo=reverbnation&logoColor=yellow">
+    <img src="https://img.shields.io/github/license/szmazhr/DiscordJS-V14-Bot-Template?label=License&color=808080&logo=gitbook&logoColor=808080">
+    <img src="https://img.shields.io/github/issues/szmazhr/DiscordJS-V14-Bot-Template?label=Issues&color=red&logo=ifixit&logoColor=red">
     <br>
     <a style="font-size:15px;font-family:verdana"><b>Language:</b></a><br>
     <img src="https://img.shields.io/badge/JavaScript-100000?label=Made%20with:&style=flat&logo=javascript&color=yellow">
-    <br>
-    <a style="font-size:15px;font-family:verdana"><b>Fork/Download For:</b></a><br>
-    <a href="https://replit.com/github/Da4ndo/Better-DiscordJS-V14-Bot-Template">
-        <img src="https://img.shields.io/badge/Repl.it-100000?label=Fork%20on:&style=flat&logo=replit&color=808080&logoColor=white">
-    </a>
-    <a href="https://github.com/Da4ndo/Better-DiscordJS-V14-Bot-Template/archive/refs/heads/main.zip">
-        <img src="https://img.shields.io/badge/Visual Studio Code-100000?label=Download%20for:&style=flat&logo=visual studio code&color=blue&logoColor=007ACC">
-    </a>
-    <a href="https://github.com/Da4ndo/Better-DiscordJS-V14-Bot-Template/fork">
-        <img src="https://img.shields.io/badge/GitHub-100000?label=Fork%20on:&style=flat&logo=github&color=808080">
-    </a>
 </p>
 
-# Better DiscordJS V14 Bot Template
+# DiscordJS V14 Bot Template
 
-The Discord bot project made with the npm package of discord.js version 14. It handles prefix commands, slash commands, events, components, multiple languages and logging. You can create as many commands as you want to shape your Bot as you want. **Project made with ❤ by Da4ndo.**
+The Discord bot project made with the npm package of discord.js version 14. It handles prefix commands, slash commands, events, components, multiple languages and logging. You can create as many commands as you want to shape your Bot as you want. 
+**Project is forked from [Da4ndo/Better-DiscordJS-V14-Bot-Template](https://github.com/Da4ndo/Better-DiscordJS-V14-Bot-Template).**
+
 
 You can click on the star (⭐️) button above this repository if you liked this project! Thank you all. 🙏
 
@@ -43,16 +30,17 @@ Discord.js Documentation is linked [here](https://discord.js.org/#/docs/discord.
 
 # Changelog
 
-## [1.2.0] - 2023-05-6
+## [1.2.1] - 2023-05-6
 
-### Changed
-- Updated handlers to load all valid command files in their directory and all its subdirectories, regardless of how deep the subdirectories go
-- Fixed forgetten false reference for configs
+### Fixed
+- Added ESLint and Prettier for improved code quality and formatting.
+- Renamed `server` to `Server` and `manager` to `Manager` in the export object of the Mongoose models. And also where it was used.
+- Changed some variables to CamelCase
+- Fixed a typo in the `slashCommands/help.js` file, where an undefined variable `arg` was replaced with `argcommand` in the 
+- Modified `events/interactionCreate.js` file to replace `cooldown` with `commands:cooldown` and updated `ms` function parameters to use `slash-${commandData.name}` and `interaction.user.id`. This change ensures that cooldown works correctly for slash commands.
+- Removed `@discordjs/rest` as it is already included by `discord.js`.
 
-### Added
-- More basic slash commands (userinfo, serverinfo, avatar)
-
-(More in [**CHANGELOG.md**](https://github.com/Da4ndo/Better-DiscordJS-V14-Bot-Template/blob/main/CHANGELOG.md))
+(More in [**CHANGELOG.md**](https://github.com/szmazhr/DiscordJS-V14-Bot-Template/blob/main/CHANGELOG.md))
 
 # How to setup:
 
@@ -64,14 +52,17 @@ npm install
 ```
 **OR**
 ```bash
-npm install discord.js @discordjs/rest ms dotenv moment mongoose
+npm install discord.js ms dotenv moment mongoose
 ```
+### 2. Create .env file
 
-### 2. Modifying configs
+Copy **.env.sample** and rename it to **.env**. Then set the token and client id in **.env**.
 
-Set token and client id in **.env**, and modify settings to your preference in **config.json**
+### 3. Modifying configs
 
-(Checkout documentation file [here](https://github.com/Da4ndo/Better-DiscordJS-V14-Bot-Template/blob/main/DOCS.md).)
+Modify settings to your preference in **config.json** like for enabling/disabling database, setting prefix, etc.
+
+(Checkout documentation file [here](https://github.com/szmazhr/DiscordJS-V14-Bot-Template/blob/main/DOCS.md).)
 
 ## Database
 
@@ -120,4 +111,4 @@ journalctl -fu <your_bot_name>
 
 # How to develop
 
-For more information checkout [**DOCS.md**](https://github.com/Da4ndo/Better-DiscordJS-V14-Bot-Template/blob/main/DOCS.md).
+For more information checkout [**DOCS.md**](https://github.com/szmazhr/DiscordJS-V14-Bot-Template/blob/main/DOCS.md).

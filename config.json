@@ -13,9 +13,7 @@
                 "verify",
                 "ticket"
             ],
-            "groups": {
-
-            }
+            "groups": {}
         },
         "manager": {
             "verify": {

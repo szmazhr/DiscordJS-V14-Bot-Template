@@ -1,30 +1,30 @@
 const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
-	name: 'deleteOne',
-	enabled: true,
-    aliases: [],
-	description: 'Delete one server data.',
-	cooldown: 0,
-	permissions: {
-        roles_permissions: {
-            user: [],
-            bot: [],
-        },
-        user_permission: {
-            type: 'owners',
-        }
+  name: 'deleteOne',
+  enabled: true,
+  aliases: [],
+  description: 'Delete one server data.',
+  cooldown: 0,
+  permissions: {
+    roles_permissions: {
+      user: [],
+      bot: [],
     },
-	help: {
-        usage: '{prefix}{command}',
+    user_permission: {
+      type: 'owners',
     },
-	run: async (client, message, args) => {
-		client.logger.debug('Called shutdown.js');
-		await client.models.server.deleteOne({id: message.guild.id});
-		const deletedembed = new EmbedBuilder()
-		.setDescription('✅ Deleted server data.')
-		.setColor('Green');
+  },
+  help: {
+    usage: '{prefix}{command}',
+  },
+  run: async (client, message, args) => {
+    client.logger.debug('Called shutdown.js');
+    await client.models.Server.deleteOne({ id: message.guild.id });
+    const deletedembed = new EmbedBuilder()
+      .setDescription('✅ Deleted server data.')
+      .setColor('Green');
 
-        message.reply({embeds: [deletedembed]});
-	}
+    message.reply({ embeds: [deletedembed] });
+  },
 };

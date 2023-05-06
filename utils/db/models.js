@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const ServerModel = mongoose.Schema({
   id: String,
@@ -16,6 +16,6 @@ const ManagerModel = mongoose.Schema({
 });
 
 module.exports = {
-  server: mongoose.model("Servers", ServerModel),
-  manager: mongoose.model("Managers", ManagerModel),
+  Server: mongoose.model('Servers', ServerModel),
+  Manager: mongoose.model('Managers', ManagerModel),
 };

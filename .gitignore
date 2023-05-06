@@ -1,6 +1,7 @@
 .vscode/
 .git/
 .dccache
+.env
 
 node_modules/
 log/

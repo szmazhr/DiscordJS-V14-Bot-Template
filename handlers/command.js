@@ -1,4 +1,4 @@
-const fs = require("fs").promises;
+const fs = require('fs').promises;
 
 module.exports = async (client) => {
   client.logger.debug(`Called handlers/command.js`);
@@ -13,8 +13,8 @@ module.exports = async (client) => {
         await loadCommands(`${dir}/${file.name}`);
       } else if (
         file.isFile() &&
-        file.name.endsWith(".js") &&
-        !file.name.startsWith("#")
+        file.name.endsWith('.js') &&
+        !file.name.startsWith('#')
       ) {
         const command = require(`../${dir}/${file.name}`);
         if (command) {
@@ -31,7 +31,7 @@ module.exports = async (client) => {
     }
   }
 
-  await loadCommands("./commands");
+  await loadCommands('./commands');
 
-  console.log(`Loaded Commands: \n    ${loadedCommands.join("\n    ")}`);
+  console.log(`Loaded Commands: \n    ${loadedCommands.join('\n    ')}`);
 };

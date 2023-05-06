@@ -1,85 +1,85 @@
-const { ApplicationCommandType } = require("discord.js");
-const fs = require("fs");
+const { ApplicationCommandType } = require('discord.js');
+const fs = require('fs');
 
 module.exports = {
-  name: "changelang",
+  name: 'changelang',
   enabled: true,
-  description: "Change the language.",
+  description: 'Change the language.',
   cooldown: 0,
   type: ApplicationCommandType.ChatInput,
   permissions: {
     slash_register_data: {
-      default_permissions: "ManageGuild",
-      default_member_permissions: "ManageGuild",
+      default_permissions: 'ManageGuild',
+      default_member_permissions: 'ManageGuild',
     },
     roles_permissions: {
       user: [],
       bot: [],
     },
     user_permission: {
-      type: "guildOwner",
+      type: 'guildOwner',
     },
   },
   help: {
-    usage: "/{command} [language]",
+    usage: '/{command} [language]',
   },
   options: [
     {
-      name: "language",
-      description: "What to language",
+      name: 'language',
+      description: 'What to language',
       type: 3,
       required: true,
       autocomplete: true,
     },
   ],
   autocomplete: (interaction, choices) => {
-    var chs = fs
+    const chs = fs
       .readdirSync(`./language/`)
-      .filter((file) => file.endsWith(".json") && !file.startsWith("#"));
+      .filter((file) => file.endsWith('.json') && !file.startsWith('#'));
     chs.forEach((c) => {
       choices.push({
-        name: `${c.replace(/\.json$/, "")}`,
-        value: `${c.replace(/\.json$/, "")}`,
+        name: `${c.replace(/\.json$/, '')}`,
+        value: `${c.replace(/\.json$/, '')}`,
       });
     });
     interaction.respond(choices).catch(console.error);
   },
   run: async (client, interaction) => {
     if (client.config.database) {
-      await client.models.server.findOneAndUpdate(
+      await client.models.Server.findOneAndUpdate(
         { id: interaction.guild.id },
         {
           language: interaction.options
-            .get("language")
-            .value.replace(/\.json$/, ""),
+            .get('language')
+            .value.replace(/\.json$/, ''),
         }
       );
       client.logger.info(
         `Language changed to ${interaction.options
-          .get("language")
-          .value.replace(/\.json$/, "")} at server ${interaction.guild.name}`
+          .get('language')
+          .value.replace(/\.json$/, '')} at server ${interaction.guild.name}`
       );
     } else {
       client.config.default.server.language = interaction.options
-        .get("language")
-        .value.replace(/\.json$/, "");
+        .get('language')
+        .value.replace(/\.json$/, '');
       delete client.config.default.server.id;
       fs.writeFile(
-        "./config.json",
+        './config.json',
         JSON.stringify(client.config, null, 4),
-        "utf8",
+        'utf8',
         () => {}
       );
       client.logger.info(
         `Universal language changed to ${interaction.options
-          .get("language")
-          .value.replace(/\.json$/, "")}`
+          .get('language')
+          .value.replace(/\.json$/, '')}`
       );
     }
     await interaction.reply({
       content: `Language changed to **${interaction.options
-        .get("language")
-        .value.replace(/\.json$/, "")}**.`,
+        .get('language')
+        .value.replace(/\.json$/, '')}**.`,
     });
   },
 };

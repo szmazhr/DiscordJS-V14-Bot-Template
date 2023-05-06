@@ -1,22 +1,24 @@
+const fs = require('fs');
+
 const {
   EmbedBuilder,
   ApplicationCommandType,
   ButtonBuilder,
   ButtonStyle,
   ActionRowBuilder,
-} = require("discord.js");
-const lang = require("../utils/lang.js");
+} = require('discord.js');
+const lang = require('../utils/lang.js');
 
 module.exports = {
-  name: "verify",
+  name: 'verify',
   enabled: true,
-  description: "Manage verify.",
+  description: 'Manage verify.',
   cooldown: 0,
   type: ApplicationCommandType.ChatInput,
   permissions: {
     slash_register_data: {
-      default_permissions: "ManageGuild",
-      default_member_permissions: "ManageGuild",
+      default_permissions: 'ManageGuild',
+      default_member_permissions: 'ManageGuild',
     },
     roles_permissions: {
       user: [],
@@ -27,17 +29,17 @@ module.exports = {
     },
   },
   help: {
-    usage: "/{command} [command] (args)",
+    usage: '/{command} [command] (args)',
   },
   options: [
     {
-      name: "setup",
-      description: "Setup verify.",
+      name: 'setup',
+      description: 'Setup verify.',
       type: 1,
       options: [
         {
-          name: "role",
-          description: "Specify the verify role to give users.",
+          name: 'role',
+          description: 'Specify the verify role to give users.',
           type: 8,
           required: true,
         },
@@ -46,15 +48,15 @@ module.exports = {
   ],
   run: async (client, interaction) => {
     const server = await client.get.server(interaction.guild.id);
-    const manager = await client.get.manager("verify");
+    const manager = await client.get.manager('verify');
 
-    if (interaction.options._subcommand === "setup") {
+    if (interaction.options._subcommand === 'setup') {
       if (server.enabled_managers.includes(manager.name)) {
-        const role = interaction.options.get("role").role;
+        const role = interaction.options.get('role').role;
         try {
           if (client.config.database) {
             manager.data.set(server.id, { role_id: String(role.id) });
-            await client.models.manager.findOneAndUpdate(
+            await client.models.Manager.findOneAndUpdate(
               { name: manager.name },
               { data: manager.data }
             );
@@ -62,33 +64,33 @@ module.exports = {
             client.config.default.manager[manager.name].settings.role_id =
               String(role.id);
             fs.writeFile(
-              "./config.json",
+              './config.json',
               JSON.stringify(client.config, null, 4),
-              "utf8",
+              'utf8',
               () => {}
             );
           }
 
           const verifyembed = new EmbedBuilder()
-            .setTitle("Verify")
+            .setTitle('Verify')
             .setDescription(
-              lang("commands:verify:setup", server.language, [
+              lang('commands:verify:setup', server.language, [
                 interaction.guild.name,
               ])
             )
-            .setColor("#EEEEEC");
+            .setColor('#EEEEEC');
           const verifybutton = new ButtonBuilder()
-            .setCustomId("verify")
-            .setLabel("Verify")
-            .setEmoji("✅")
+            .setCustomId('verify')
+            .setLabel('Verify')
+            .setEmoji('✅')
             .setStyle(ButtonStyle.Primary);
           await interaction.channel.send({
             embeds: [verifyembed],
             components: [new ActionRowBuilder().addComponents(verifybutton)],
           });
           await interaction.reply({
-            content: lang("commands:setup:succesful", server.language, [
-              "verify",
+            content: lang('commands:setup:succesful', server.language, [
+              'verify',
             ]),
             ephemeral: true,
           });
@@ -96,7 +98,7 @@ module.exports = {
           client.logger.error(e);
           console.log(`\x1b[31m> Error: ${e}\x1b[0m`);
           await interaction.reply({
-            content: lang("commands:setup:error", server.language),
+            content: lang('commands:setup:error', server.language),
             ephemeral: true,
           });
         }

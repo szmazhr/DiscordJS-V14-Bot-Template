@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.2.1] - 2023-05-6
+
+### Fixed
+- Added ESLint and Prettier for improved code quality and formatting.
+- Renamed `server` to `Server` and `manager` to `Manager` in the export object of the Mongoose models. And also where it was used.
+- Changed some variables to CamelCase
+- Fixed a typo in the `slashCommands/help.js` file, where an undefined variable `arg` was replaced with `argcommand` in the 
+- Modified `events/interactionCreate.js` file to replace `cooldown` with `commands:cooldown` and updated `ms` function parameters to use `slash-${commandData.name}` and `interaction.user.id`. This change ensures that cooldown works correctly for slash commands.
+- Removed `@discordjs/rest` as it is already included by `discord.js`.
+
 ## [1.2.0] - 2023-05-6
 
 ### Changed

@@ -1,15 +1,15 @@
-const fs = require("fs");
+const fs = require('fs');
 
 module.exports = (client) => {
-  client.logger.debug("Called handlers/component.js");
+  client.logger.debug('Called handlers/component.js');
   const loadedComponents = [];
 
-  fs.readdirSync("./components/", { withFileTypes: true })
+  fs.readdirSync('./components/', { withFileTypes: true })
     .filter((item) => item.isDirectory())
     .map((item) => item.name)
     .forEach((dir) => {
       fs.readdirSync(`./components/${dir}/`)
-        .filter((file) => file.endsWith(".js") && !file.startsWith("#"))
+        .filter((file) => file.endsWith('.js') && !file.startsWith('#'))
         .forEach((file) => {
           const component = require(`../components/${dir}/${file}`);
           if (component) {
@@ -20,5 +20,5 @@ module.exports = (client) => {
         });
     });
 
-  console.log(`Loaded components: \n    ${loadedComponents.join("\n    ")}`);
+  console.log(`Loaded components: \n    ${loadedComponents.join('\n    ')}`);
 };

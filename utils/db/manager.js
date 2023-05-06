@@ -1,13 +1,14 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 async function connect(client) {
-  process.stdout.write("> Connecting to database... \r");
+  process.stdout.write('> Connecting to database... \r');
   const connectionString = `${process.env.MONGO_URL}`;
 
+  mongoose.set('strictQuery', false);
   mongoose.connect(
     connectionString,
     { useNewUrlParser: true, keepAlive: true },
@@ -17,103 +18,99 @@ async function connect(client) {
         mongoose.connection.readyState = 1;
         sleep(500);
         process.stdout.write(
-          "\x1b[31m> Failed to connect to database. \x1b[0m\n"
+          '\x1b[31m> Failed to connect to database. \x1b[0m\n'
         );
         process.exit(1);
       }
     }
   );
-  var count = 0;
+  let count = 0;
   while (mongoose.connection.readyState !== 1) {
     if (count === 3) {
       count = 0;
     }
 
     // Don't blame me for this
-    var text =
-      count == 0
-        ? "> Connecting to database.  \r"
-        : count == 1
-        ? "> Connecting to database.. \r"
-        : "> Connecting to database...\r";
-    process.stdout.write(text + " \r");
+    const text =
+      count === 0
+        ? '> Connecting to database.  \r'
+        : count === 1
+        ? '> Connecting to database.. \r'
+        : '> Connecting to database...\r';
+    process.stdout.write(text + ' \r');
     await sleep(500);
 
     count++;
   }
-  client.logger.info(
-    `[DB] Connected to database. (${connectionString})`
-  );
+  client.logger.info(`[DB] Connected to database. (${connectionString})`);
   process.stdout.write(
     `\x1b[32m> Connected to database. (${connectionString})\x1b[0m\n`
   );
 }
 
 async function getServer(id) {
-  const client = require("../../bot");
-  client.logger.debug("Called get_server");
+  const client = require('../../bot');
+  client.logger.debug('Called get_server');
 
   if (!client.config.database) {
     const server = client.config.default.server;
     server.id = String(id);
-    let commands_data = [];
+    const commandsData = [];
 
     client.commands.forEach((value, key) => {
-      commands_data.push({
+      commandsData.push({
         name: value.name,
-        type: "command",
+        type: 'command',
         enabled: value.enabled,
         permission: value.permissions.user_permission,
       });
     });
 
     client.slashCommands.forEach((value, key) => {
-      commands_data.push({
+      commandsData.push({
         name: value.name,
-        type: "slashCommand",
+        type: 'slashCommand',
         enabled: value.enabled,
         permission: value.permissions.user_permission,
       });
     });
 
-    server.commands_data = commands_data;
+    server.commands_data = commandsData;
     return server;
   }
 
   try {
-    const server = await client.models.server
-      .findOne({ id: String(id) })
-      .exec();
+    const server = await client.models.Server.findOne({
+      id: String(id),
+    }).exec();
     if (!server) {
-      const commands_data = [];
+      const commandsData = [];
 
       client.commands.forEach((value, key) => {
-        commands_data.push({
+        commandsData.push({
           name: value.name,
-          type: "command",
+          type: 'command',
           enabled: value.enabled,
           permission: value.permissions.user_permission,
         });
       });
 
       client.slashCommands.forEach((value, key) => {
-        commands_data.push({
+        commandsData.push({
           name: value.name,
-          type: "slashCommand",
+          type: 'slashCommand',
           enabled: value.enabled,
           permission: value.permissions.user_permission,
         });
       });
 
-      const newServer = new client.models.server({
+      const newServer = new client.models.Server({
         id: String(id),
         language: client.config.default.server.language,
         prefix: client.config.default.server.prefix,
-        commands_data: commands_data,
-        enabled_events:
-          client.config.default.server.enabled_events,
-        enabled_managers:
-          client.config.default.server.enabled_managers,
+        commandsData,
+        enabled_events: client.config.default.server.enabled_events,
+        enabled_managers: client.config.default.server.enabled_managers,
         groups: new Map(),
       });
 
@@ -124,11 +121,9 @@ async function getServer(id) {
         id: String(id),
         language: client.config.default.server.language,
         prefix: client.config.default.server.prefix,
-        commands_data: commands_data,
-        enabled_events:
-          client.config.default.server.enabled_events,
-        enabled_managers:
-          client.config.default.server.enabled_managers,
+        commandsData,
+        enabled_events: client.config.default.server.enabled_events,
+        enabled_managers: client.config.default.server.enabled_managers,
         groups: new Map(),
       };
     }
@@ -148,7 +143,7 @@ async function getServer(id) {
         if (!existingCommands.includes(command.name)) {
           newCommands.push({
             name: command.name,
-            type: "command",
+            type: 'command',
             enabled: command.enabled,
             permission: command.permissions.user_permission,
           });
@@ -159,7 +154,7 @@ async function getServer(id) {
         if (!existingCommands.includes(command.name)) {
           newCommands.push({
             name: command.name,
-            type: "slashCommand",
+            type: 'slashCommand',
             enabled: command.enabled,
             permission: command.permissions.user_permission,
           });
@@ -167,9 +162,9 @@ async function getServer(id) {
       });
 
       server.commands_data = [...server.commands_data, ...newCommands];
-      await client.models.server.findOneAndUpdate(
+      await client.models.Server.findOneAndUpdate(
         { id: server.id },
-        { commands_data: server.commands_data }
+        { commandsData: server.commands_data }
       );
 
       client.logger.info(
@@ -186,25 +181,25 @@ async function getServer(id) {
 }
 
 async function getManager(name) {
-  const client = require("../../bot");
-  client.logger.debug("Called get_manager");
+  const client = require('../../bot');
+  client.logger.debug('Called get_manager');
 
   if (client.config.database) {
     try {
-      const manager = await client.models.manager
-        .findOne({ name: String(name) })
-        .exec();
+      const manager = await client.models.Manager.findOne({
+        name: String(name),
+      }).exec();
 
       if (manager === null) {
-        const newManager = new client.models.manager({
-          name: name,
+        const newManager = new client.models.Manager({
+          name,
           data: new Map(),
         });
         await newManager.save();
         client.logger.debug(`[DB] Added new manager to database. (${name})`);
 
         return {
-          name: name,
+          name,
           data: new Map(),
         };
       } else {

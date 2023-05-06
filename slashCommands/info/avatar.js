@@ -1,10 +1,10 @@
-const { ApplicationCommandType } = require("discord.js");
-const lang = require("../../utils/lang.js");
+const { ApplicationCommandType } = require('discord.js');
+const lang = require('../../utils/lang.js');
 
 module.exports = {
-  name: "avatar",
+  name: 'avatar',
   enabled: true,
-  description: "Get the avatar URL of a user",
+  description: 'Get the avatar URL of a user',
   type: ApplicationCommandType.ChatInput,
   cooldown: 3000,
   permissions: {
@@ -22,26 +22,29 @@ module.exports = {
   },
   options: [
     {
-      name: "user",
-      description: "The user to get the avatar of",
+      name: 'user',
+      description: 'The user to get the avatar of',
       type: 6,
       required: false,
     },
   ],
   help: {
-    usage: "/{command} [@user]",
+    usage: '/{command} [@user]',
   },
   run: async (client, interaction) => {
     const server = await client.get.server(interaction.guild.id);
-    const user = interaction.options.getUser("user") || interaction.user;
+    const user = interaction.options.getUser('user') || interaction.user;
     const avatarUrl = user.displayAvatarURL({
-      format: "png",
+      format: 'png',
       dynamic: true,
       size: 2048,
     });
 
     interaction.reply({
-      content: lang("commands:avatar", server.language, [user.username, avatarUrl]),
+      content: lang('commands:avatar', server.language, [
+        user.username,
+        avatarUrl,
+      ]),
     });
   },
 };

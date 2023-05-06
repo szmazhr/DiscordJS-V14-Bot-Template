@@ -1,12 +1,12 @@
-require("dotenv").config();
-const moment = require("moment");
-const Logger = require("./utils/logger");
+require('dotenv').config();
+const moment = require('moment');
+const Logger = require('./utils/logger');
 const {
   Client,
   GatewayIntentBits,
   Partials,
   Collection,
-} = require("discord.js");
+} = require('discord.js');
 
 const client = new Client({
   intents: [
@@ -28,18 +28,18 @@ const client = new Client({
   ],
 });
 
-const config = require("./config.json");
-const dbManager = require("./utils/db/manager");
+const config = require('./config.json');
+const dbManager = require('./utils/db/manager');
 
 client.commands = new Collection();
 client.aliases = new Collection();
 client.slashCommands = new Collection();
 client.buttons = new Collection();
 client.select_menus = new Collection();
-client.prefix = config["default"].server.prefix;
+client.prefix = config.default.server.prefix;
 client.config = config;
-client.models = require("./utils/db/models");
-client.logger = new Logger(`./log/${moment().format("YYYY-MM-DD")}.log`);
+client.models = require('./utils/db/models');
+client.logger = new Logger(`./log/${moment().format('YYYY-MM-DD')}.log`);
 client.get = dbManager.get;
 
 client.logger
@@ -49,7 +49,7 @@ client.logger
       await dbManager.connect(client);
     }
 
-    const handlers = ["command", "slashCommand", "events", "component"];
+    const handlers = ['command', 'slashCommand', 'events', 'component'];
     for (const handler of handlers) {
       try {
         require(`./handlers/${handler}`)(client);
@@ -62,7 +62,7 @@ client.logger
     }
 
     await client.login(process.env.TOKEN);
-    client.logger.info("[MAIN] Client logged in");
+    client.logger.info('[MAIN] Client logged in');
   })
   .catch((err) => {
     console.error(`[MAIN] Error initializing bot: ${err.stack}`);

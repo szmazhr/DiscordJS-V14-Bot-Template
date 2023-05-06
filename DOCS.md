@@ -1,7 +1,3 @@
-<p align="center">
-    <img src="https://forthebadge.com/images/badges/powered-by-electricity.svg" />
-    <img src="https://forthebadge.com/images/badges/powered-by-black-magic.svg" />
-</p>
 
 <p align="center">
 	<img src="https://cdn.discordapp.com/attachments/781571299385540649/1026575412601565284/0_E7ioyfbvAEI4v8ta.jpeg?width=960&height=540" height="200" style="float: left; margin: 0px 10px 15px 1px;"/> <a style="font-size: 20px"> <a style="font-size: 30px"><br>
@@ -9,27 +5,16 @@
 
 <p align="center">
     <a style="font-size:15px;font-family:verdana"><b>GitHub Repository Statistics/Info:</b></a><br>
-    <img src="https://img.shields.io/github/forks/Da4ndo/Better-DiscordJS-V14-Bot-Template?label=Forks&color=lime&logo=githubactions&logoColor=lime">
-    <img src="https://img.shields.io/github/stars/Da4ndo/Better-DiscordJS-V14-Bot-Template?label=Stars&color=yellow&logo=reverbnation&logoColor=yellow">
-    <img src="https://img.shields.io/github/license/Da4ndo/Better-DiscordJS-V14-Bot-Template?label=License&color=808080&logo=gitbook&logoColor=808080">
-    <img src="https://img.shields.io/github/issues/Da4ndo/Better-DiscordJS-V14-Bot-Template?label=Issues&color=red&logo=ifixit&logoColor=red">
+    <img src="https://img.shields.io/github/forks/szmazhr/DiscordJS-V14-Bot-Template?label=Forks&color=lime&logo=githubactions&logoColor=lime">
+    <img src="https://img.shields.io/github/stars/szmazhr/DiscordJS-V14-Bot-Template?label=Stars&color=yellow&logo=reverbnation&logoColor=yellow">
+    <img src="https://img.shields.io/github/license/szmazhr/DiscordJS-V14-Bot-Template?label=License&color=808080&logo=gitbook&logoColor=808080">
+    <img src="https://img.shields.io/github/issues/szmazhr/DiscordJS-V14-Bot-Template?label=Issues&color=red&logo=ifixit&logoColor=red">
     <br>
     <a style="font-size:15px;font-family:verdana"><b>Language:</b></a><br>
     <img src="https://img.shields.io/badge/JavaScript-100000?label=Made%20with:&style=flat&logo=javascript&color=yellow">
-    <br>
-    <a style="font-size:15px;font-family:verdana"><b>Fork/Download For:</b></a><br>
-    <a href="https://replit.com/github/Da4ndo/Better-DiscordJS-V14-Bot-Template">
-        <img src="https://img.shields.io/badge/Repl.it-100000?label=Fork%20on:&style=flat&logo=replit&color=808080&logoColor=white">
-    </a>
-    <a href="https://github.com/Da4ndo/Better-DiscordJS-V14-Bot-Template/archive/refs/heads/main.zip">
-        <img src="https://img.shields.io/badge/Visual Studio Code-100000?label=Download%20for:&style=flat&logo=visual studio code&color=blue&logoColor=007ACC">
-    </a>
-    <a href="https://github.com/Da4ndo/Better-DiscordJS-V14-Bot-Template/fork">
-        <img src="https://img.shields.io/badge/GitHub-100000?label=Fork%20on:&style=flat&logo=github&color=808080">
-    </a>
 </p>
 
-# Better DiscordJS V14 Bot Template Documentation
+# DiscordJS V14 Bot Template Documentation
 
 ## Configuration
 
